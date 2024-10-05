@@ -1,12 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { XIcon ,CheckIcon, AlertTriangleIcon, ChevronDownIcon, ChevronRightIcon, TrophyIcon, WalletIcon, Minus, DollarSignIcon, LoaderPinwheelIcon, BadgeDollarSignIcon } from "lucide-react"
+import { XIcon ,CheckIcon, AlertTriangleIcon, ChevronDownIcon, ChevronRightIcon, TrophyIcon, WalletIcon, Minus, DollarSignIcon, LoaderPinwheelIcon } from "lucide-react"
 import { Loop } from './Loop';
-// import { ConnectButton } from '@/src/app/thirdweb';
-// import { client } from '@/src/app/client';
-// import { chain } from '@/src/app/chain';
-// import { Enrol } from './Enrol';
 import { useActiveAccount, useActiveWallet, useDisconnect, useReadContract } from 'thirdweb/react';
 import { contract, erc20Contract } from '@/utils/contract';
 import { toEther } from 'thirdweb';
@@ -209,7 +205,6 @@ export function Dashboard({ initialData }: { initialData: ApiResponse }) {
             >
             <Minus className="h-8 w-8 font-bold"/>
             </button> 
-            {/* <ConnectButton client={client} chain={chain}/> */}
         </div>
       </div>
       
