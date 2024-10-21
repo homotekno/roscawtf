@@ -5,6 +5,7 @@ import { useActiveAccount, useReadContract } from "thirdweb/react"
 import { Bid } from "./Bid";
 import { Pay } from "./Pay";
 import { Winner } from "./Winner";
+import { NoDue } from "./NoDue";
 
 export function Rotate(){
 
@@ -26,10 +27,17 @@ export function Rotate(){
         method : "hasWon",
         params : [wallet]
     })
+    const { data : noDueCertificate} = useReadContract({
+        contract : contract,
+        method : "userNoDueCertificate",
+        params : [wallet]
+    })
 
     return(
         <div className="w-full h-full">
-            { !hasPaidRound ? (
+            { !noDueCertificate ? (
+                <NoDue/>
+            ) : !hasPaidRound ? (
                 <Pay/>
             ) : !hasWon ? (
                 <Bid/>

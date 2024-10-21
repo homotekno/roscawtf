@@ -5,6 +5,7 @@ import { toEther } from "thirdweb";
 import { useReadContract } from "thirdweb/react"
 import { Rotate } from "./Rotate";
 import { Winner } from "./Winner";
+import { Enrol } from "./Enrol";
 
 export function Loop(){
 
@@ -57,11 +58,16 @@ export function Loop(){
         return Math.trunc(numericValue * factor) / factor;
     }
 
+    const formatTime = (seconds: number): string => {
+        const date = new Date(seconds * 1000); // Convert seconds to milliseconds
+        return date.toLocaleString(); // Extract HH:MM:SS part from ISO string
+      };
+
 
     return(
         <div className="w-full h-full flex flex-col items-center border-2 border-blue-500 py-6 my-3 rounded">
-            <span className="text-red-500 my-1 text-base text-gray-500 font-bold">⭕️ round {currentRoundStr}/{slotsStr} </span>
-            <span className="text-red-500 my-1">⏳  4.20PM 20 April 2024 </span>            
+            <span className="text-red-500 my-1 text-base text-white font-bold">⭕️ round {currentRoundStr} / {slotsStr} </span>
+            <span className="text-red-500 my-1">⏳  {deadline ? formatTime(Number(deadline)) : "No deadline set"} </span>            
             <div className="w-full h-full flex justify-center mt-3 font-bold">
                 <span className="text-lg text-blue-500 my-1 mx-3">💰</span>
                 <span className="text-lg text-blue-500 my-1"> {truncate(total, 2)} IN₹</span>
@@ -72,16 +78,13 @@ export function Loop(){
             </div>
 
             {currentRoundStr === "0" ? (
-                <div>
-                    enroll // waiting for others
-                </div>
-            ) : deadline && Date.now() < Number(deadline) * 1000 ? (
+                <Enrol/>
+            ) : deadline && Date.now() > Number(deadline) * 1000 ? (
                 <Rotate/> 
             ) : (
                 <Winner/>
             )
             }
-
         </div>
     )
 }

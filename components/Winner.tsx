@@ -14,7 +14,7 @@ export function Winner(){
           primaryButtonText: "black",
           primaryButtonBg: "Lime",
         },
-      });
+    });
 
     const account = useActiveAccount();
     const wallet = account ? account.address : ""
@@ -59,6 +59,13 @@ export function Winner(){
     });
     const winner = winnerRound ? winnerRound.toString() : ""
 
+    const { data : cashoutStatusforRound } = useReadContract({
+        contract : contract,
+        method : "cashoutStatusforRound",
+        params : [currentRound ? currentRound : BigInt(0)]
+    });
+    // const winner = winnerRound ? winnerRound.toString() : ""
+
     const { data : winnerName } = useReadContract({
         contract : contract,
         method : "username",
@@ -75,10 +82,10 @@ export function Winner(){
                   <p className="space-y-2 text-sm font-bold text-blue-500">discount : {wBid.toString()} %</p>
                   <p className="space-y-2 text-sm font-bold text-red-500">deafulters : {defaulters.toString()}</p>
                   <p className="space-y-2 text-sm font-bold text-blue-500">winner : {winnerName}</p>
-                  <p className="space-y-2 text-sm font-bold text-blue-500">fees : 10 INR</p>
+                  <p className="space-y-2 text-sm font-bold text-blue-500">fees : 0.01 INR</p>
                 </div>
 
-                { wallet === winnerRound ? (
+                { wallet === winnerRound && !cashoutStatusforRound ? (
                     <div className="space-y-1 mb-6">
                         <div className="w-full flex flex-col items-center">
                             <TransactionButton
@@ -86,18 +93,17 @@ export function Winner(){
                                 transaction={async () => {
                                     return prepareContractCall({
                                         contract: contract,
-                                        method: "contribute",
+                                        method: "cashout",
                                     });
                                 }}
                                 onTransactionConfirmed={() => alert("Success!!")}
                             >
                             💸 cashout
                             </TransactionButton>
-                        </div>
-                        
+                        </div>                        
                     </div>
                 ) : (
-                    <div></div>
+                    <div className="w-full flex flex-col items-center">✅</div>
                 )}
     
                 

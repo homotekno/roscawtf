@@ -4,12 +4,12 @@ import { contract } from "@/utils/contract";
 import { prepareContractCall } from "thirdweb";
 import { darkTheme, TransactionButton } from "thirdweb/react";
 
-export function Enrol(){
+export function NoDue(){
 
     const customTheme = darkTheme({
         colors: {
           primaryButtonText: "white",
-          primaryButtonBg: "blue",
+          primaryButtonBg: "red",
         },
     });
 
@@ -21,12 +21,12 @@ export function Enrol(){
                     transaction={async () => {
                         return prepareContractCall({
                             contract: contract,
-                            method: "enroll",
+                            method: "noDueCertificate",
                         });
                     }}
                     onTransactionConfirmed={() => alert("Success!!")}
                 >
-                🚀 enrol
+                🥶 clear dues
                 </TransactionButton>
             </div>
         </div>
